@@ -1140,6 +1140,147 @@
                     : "You need " + formatNumber(additional) + " more marks.");
             showResult("targetResult");
         });
+        (function () {
+    function clearCalculator(card) {
+        card.querySelectorAll(".result").forEach(function (result) {
+            result.classList.remove("show");
+        });
+
+        card.querySelectorAll(".error-message").forEach(function (error) {
+            error.textContent = "";
+            error.classList.remove("show");
+        });
+    }
+
+    function createResetButton(card, form) {
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.className = "secondary-button reset-button";
+        button.textContent = "↻ Reset Calculator";
+
+        button.addEventListener("click", function () {
+            form.reset();
+            clearCalculator(card);
+        });
+
+        form.insertAdjacentElement("afterend", button);
+    }
+
+    ["percentage", "attendance", "target"].forEach(function (id) {
+        const card = document.getElementById(id);
+
+        if (!card) {
+            return;
+        }
+
+        const form = card.querySelector("form");
+
+        if (form) {
+            createResetButton(card, form);
+        }
+    });
+
+    const cgpaCard = document.getElementById("cgpa");
+    const cgpaButton = document.getElementById("calculateCgpa");
+
+    if (cgpaCard && cgpaButton) {
+        const resetButton = document.createElement("button");
+
+        resetButton.type = "button";
+        resetButton.className = "secondary-button reset-button";
+        resetButton.textContent = "↻ Reset Calculator";
+
+        resetButton.addEventListener("click", function () {
+            const list = document.getElementById("semesterList");
+
+            list.innerHTML = "";
+            renumberSemesters();
+            addSemester();
+            addSemester();
+
+            clearCalculator(cgpaCard);
+        });
+
+        cgpaButton.insertAdjacentElement("afterend", resetButton);
+    }
+
+    const resultConfigs = [
+        {
+            id: "percentageResult",
+            filename: "percentage-result.txt"
+        },
+        {
+            id: "attendanceResult",
+            filename: "attendance-result.txt"
+        },
+        {
+            id: "cgpaResult",
+            filename: "cgpa-result.txt"
+        },
+        {
+            id: "targetResult",
+            filename: "target-marks-result.txt"
+        }
+    ];
+
+    resultConfigs.forEach(function (config) {
+        const result = document.getElementById(config.id);
+
+        if (!result) {
+            return;
+        }
+
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.className = "download-result-button";
+        button.textContent = "↓ Download Result (.txt)";
+
+        button.addEventListener("click", function () {
+            if (!result.classList.contains("show")) {
+                return;
+            }
+
+            const label = result.querySelector(".result-label");
+            const value = result.querySelector(".result-value");
+            const note = result.querySelector(".result-note");
+
+            const content = [
+                "STUDENT TOOLKIT - CALCULATION RESULT",
+                "",
+                label ? label.textContent.trim() : "Result",
+                value ? value.textContent.trim() : "",
+                note ? note.textContent.trim() : "",
+                "",
+                "Generated: " + new Date().toLocaleString(),
+                "Website: " + window.location.origin +
+                    window.location.pathname
+            ].join("\n");
+
+            const blob = new Blob(
+                [content],
+                { type: "text/plain;charset=utf-8" }
+            );
+
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+
+            link.href = url;
+            link.download = config.filename;
+
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+
+            setTimeout(function () {
+                URL.revokeObjectURL(url);
+            }, 1000);
+        });
+
+        result.appendChild(button);
+    });
+})();
     </script>
 
 </body>
