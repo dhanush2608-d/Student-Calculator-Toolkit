@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free student calculators for percentage, CGPA, attendance and target marks.">
+    <title>Student Toolkit | Smart Student Calculators</title>
+
+    <style>
+        :root {
+            --blue: #155EEF;
+            --blue-dark: #1047B8;
+            --blue-light: #EAF2FF;
+            --black: #101114;
+            --white: #FFFFFF;
+            --gold: #D4A72C;
+            --red: #D92D20;
+            --background: #F6F8FC;
+            --text: #252B36;
+            --muted: #687386;
+            --border: #E0E5EF;
+            --green: #137A48;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        button, input {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.97);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(12px);
+        }
+
+        .nav {
+            width: min(1150px, 92%);
+            min-height: 74px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            color: var(--black);
+            font-size: 22px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .brand span {
+            color: var(--blue);
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 22px;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .nav-links a:hover {
+            color: var(--blue);
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 85px 20px 75px;
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            right: -100px;
+            top: -160px;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background: rgba(21, 94, 239, 0.16);
+            border-radius: 50%;
+            right: 8%;
+            bottom: -180px;
+            filter: blur(10px);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 850px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .hero-label {
+            display: inline-block;
+            margin-bottom: 18px;
+            padding: 7px 14px;
+            border: 1px solid rgba(212, 167, 44, 0.5);
+            border-radius: 30px;
+            color: var(--gold);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            margin-bottom: 18px;
+            font-size: clamp(36px, 6vw, 62px);
+            line-height: 1.12;
+        }
+
+        .hero h1 span {
+            color: #83A9FF;
+        }
+
+        .hero p {
+            max-width: 620px;
+            margin: 0 auto 28px;
+            color: #CFD4DE;
+            font-size: 16px;
+        }
+
+        .hero-button {
+            display: inline-block;
+            padding: 13px 23px;
+            border-radius: 7px;
+            background: var(--blue);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            transition: 0.25s;
+        }
+
+        .hero-button:hover {
+            background: var(--gold);
+            color: var(--black);
+            transform: translateY(-2px);
+        }
+
+        .features {
+            width: min(1050px, 92%);
+            margin: -25px auto 0;
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .feature {
+            padding: 21px 12px;
+            text-align: center;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--white);
+            box-shadow: 0 8px 25px rgba(16, 17, 20, 0.04);
+        }
+
+        .feature strong {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--blue);
+            font-size: 15px;
+        }
+
+        .feature span {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .section {
+            width: min(1150px, 92%);
+            margin: auto;
+            padding: 75px 0;
+        }
+
+        .section-heading {
+            margin-bottom: 38px;
+            text-align: center;
+        }
+
+        .section-heading p {
+            margin-bottom: 7px;
+            color: var(--blue);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .section-heading h2 {
+            color: var(--black);
+            font-size: clamp(28px, 4vw, 36px);
+        }
+
+        .section-heading .description {
+            max-width: 600px;
+            margin: 10px auto 0;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .calculator-card {
+            padding: 30px;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            background: var(--white);
+            box-shadow: 0 8px 30px rgba(16, 17, 20, 0.035);
+            scroll-margin-top: 100px;
+            transition: border-color 0.25s, transform 0.25s;
+        }
+
+        .calculator-card:hover {
+            border-color: #B8CCFF;
+        }
+
+        .card-heading {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .card-icon {
+            display: flex;
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            border-radius: 11px;
+            background: var(--blue-light);
+            color: var(--blue);
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .card-heading h3 {
+            margin-bottom: 4px;
+            color: var(--black);
+            font-size: 20px;
+        }
+
+        .card-heading p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .field {
+            margin-bottom: 17px;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 7px;
+            color: var(--text);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .field input {
+            width: 100%;
+            min-height: 45px;
+            padding: 11px 13px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            outline: none;
+            background: #FCFCFE;
+            color: var(--text);
+        }
+
+        .field input:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(21, 94, 239, 0.09);
+        }
+
+        .field small {
+            display: block;
+            margin-top: 5px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .primary-button {
+            width: 100%;
+            min-height: 46px;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 7px;
+            background: var(--blue);
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 700;
+            transition: background 0.25s, transform 0.25s;
+        }
+
+        .primary-button:hover {
+            background: var(--blue-dark);
+            transform: translateY(-1px);
+        }
+
+        .secondary-button {
+            padding: 9px 13px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--white);
+            color: var(--blue);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .secondary-button:hover {
+            background: var(--blue-light);
+        }
+
+        .result {
+            display: none;
+            margin-top: 18px;
+            padding: 17px;
+            border: 1px solid #CBDAFF;
+            border-radius: 9px;
+            background: var(--blue-light);
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result-label {
+            margin-bottom: 4px;
+            color: var(--blue-dark);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .result-value {
+            color: var(--black);
+            font-size: 28px;
+            font-weight: 800;
+            line-height: 1.3;
+            overflow-wrap: anywhere;
+        }
+
+        .result-note {
+            margin-top: 6px;
+            color: var(--text);
+            font-size: 12px;
+        }
+
+        .error-message {
+            display: none;
+            margin-top: 13px;
+            padding: 11px 13px;
+            border: 1px solid #F5C2BE;
+            border-radius: 7px;
+            background: #FDECEA;
+            color: var(--red);
+            font-size: 12px;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .semester-list {
+            display: grid;
+            gap: 11px;
+            margin-bottom: 17px;
+        }
+
+        .semester-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            align-items: end;
+            gap: 9px;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #FCFCFE;
+        }
+
+        .semester-row .field {
+            min-width: 0;
+            margin: 0;
+        }
+
+        .semester-row .field label {
+            font-size: 11px;
+        }
+
+        .semester-row .field input {
+            min-height: 40px;
+            padding: 8px;
+        }
+
+        .remove-semester {
+            width: 38px;
+            height: 40px;
+            border: 1px solid #F5C2BE;
+            border-radius: 6px;
+            background: #FDECEA;
+            color: var(--red);
+            font-weight: 700;
+        }
+
+        .cgpa-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 17px;
+        }
+
+        .note {
+            margin-top: 14px;
+            padding: 13px;
+            border-left: 3px solid var(--gold);
+            border-radius: 4px;
+            background: #FFF9E7;
+            color: #66521C;
+            font-size: 12px;
+        }
+
+        .how-section {
+            background: var(--white);
+        }
+
+        .how-container {
+            width: min(1000px, 92%);
+            margin: auto;
+            padding: 65px 0;
+        }
+
+        .how-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .how-card {
+            padding: 24px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .how-number {
+            display: flex;
+            width: 37px;
+            height: 37px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+            border-radius: 9px;
+            background: var(--black);
+            color: var(--gold);
+            font-weight: 800;
+        }
+
+        .how-card h3 {
+            margin-bottom: 7px;
+            color: var(--black);
+            font-size: 17px;
+        }
+
+        .how-card p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .footer {
+            padding: 30px 20px;
+            background: var(--black);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .footer strong {
+            color: var(--gold);
+        }
+
+        .footer p {
+            margin-top: 5px;
+            color: #BDC2CD;
+            font-size: 12px;
+        }
+
+        @media (max-width: 800px) {
+            .nav {
+                padding: 15px 0;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .how-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 65px 18px 60px;
+            }
+
+            .hero p {
+                font-size: 14px;
+            }
+
+            .section {
+                padding: 55px 0;
+            }
+
+            .calculator-card {
+                padding: 21px;
+            }
+
+            .card-heading h3 {
+                font-size: 18px;
+            }
+
+            .semester-row {
+                grid-template-columns: 1fr 1fr auto;
+                gap: 6px;
+                padding: 8px;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="brand">Student<span>Toolkit.</span></a>
+            <div class="nav-links">
+                <a href="#calculators">Calculators</a>
+                <a href="#cgpa">CGPA</a>
+                <a href="#attendance">Attendance</a>
+                <a href="#about">About</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-label">YOUR FREE STUDENT COMPANION</span>
+            <h1>Study smarter.<br><span>Plan better.</span></h1>
+            <p>
+                Simple and free calculators to help students check their marks,
+                calculate attendance, estimate CGPA and plan their academic goals.
+            </p>
+            <a href="#calculators" class="hero-button">Explore Calculators →</a>
+        </div>
+    </section>
+
+    <div class="features">
+        <div class="feature">
+            <strong>Percentage</strong>
+            <span>Calculate your marks</span>
+        </div>
+        <div class="feature">
+            <strong>Attendance</strong>
+            <span>Track your classes</span>
+        </div>
+        <div class="feature">
+            <strong>CGPA</strong>
+            <span>Estimate your result</span>
+        </div>
+        <div class="feature">
+            <strong>Target Marks</strong>
+            <span>Plan your goal</span>
+        </div>
+    </div>
+
+    <main id="calculators" class="section">
+        <div class="section-heading">
+            <p>STUDENT TOOLS</p>
+            <h2>Your Academic Calculator Toolkit</h2>
+            <p class="description">
+                Enter your details, click calculate and get your result instantly.
+                No account or sign-up required.
+            </p>
+        </div>
+
+        <div class="calculator-grid">
+
+            <section class="calculator-card" id="percentage">
+                <div class="card-heading">
+                    <div class="card-icon">%</div>
+                    <div>
+                        <h3>Percentage Calculator</h3>
+                        <p>Find your percentage from obtained and total marks.</p>
+                    </div>
+                </div>
+
+                <form id="percentageForm" novalidate>
+                    <div class="field">
+                        <label for="obtained">Marks Obtained</label>
+                        <input type="number" id="obtained" min="0" step="any" placeholder="e.g. 420" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="totalMarks">Total Marks</label>
+                        <input type="number" id="totalMarks" min="0.01" step="any" placeholder="e.g. 500" required>
+                    </div>
+
+                    <button class="primary-button" type="submit">Calculate Percentage</button>
+                </form>
+
+                <div class="error-message" id="percentageError" role="alert"></div>
+                <div class="result" id="percentageResult" aria-live="polite">
+                    <div class="result-label">Your Percentage</div>
+                    <div class="result-value" id="percentageValue"></div>
+                    <div class="result-note" id="percentageNote"></div>
+                </div>
+            </section>
+
+            <section class="calculator-card" id="attendance">
+                <div class="card-heading">
+                    <div class="card-icon">✓</div>
+                    <div>
+                        <h3>Attendance Calculator</h3>
+                        <p>Calculate attendance and classes needed to reach your target.</p>
+                    </div>
+                </div>
+
+                <form id="attendanceForm" novalidate>
+                    <div class="field">
+                        <label for="classesAttended">Classes Attended</label>
+                        <input type="number" id="classesAttended" min="0" step="1" placeholder="e.g. 36" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="classesHeld">Total Classes Conducted</label>
+                        <input type="number" id="classesHeld" min="1" step="1" placeholder="e.g. 45" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="attendanceTarget">Target Attendance (%)</label>
+                        <input type="number" id="attendanceTarget" min="0.01" max="100" step="any" value="75" required>
+                    </div>
+
+                    <button class="primary-button" type="submit">Calculate Attendance</button>
+                </form>
+
+                <div class="error-message" id="attendanceError" role="alert"></div>
+                <div class="result" id="attendanceResult" aria-live="polite">
+                    <div class="result-label">Your Attendance</div>
+                    <div class="result-value" id="attendanceValue"></div>
+                    <div class="result-note" id="attendanceNote"></div>
+                </div>
+            </section>
+
+            <section class="calculator-card" id="cgpa">
+                <div class="card-heading">
+                    <div class="card-icon">CG</div>
+                    <div>
+                        <h3>CGPA Calculator</h3>
+                        <p>Estimate cumulative GPA using semester GPA and credits.</p>
+                    </div>
+                </div>
+
+                <div id="semesterList" class="semester-list"></div>
+
+                <div class="cgpa-actions">
+                    <button type="button" class="secondary-button" id="addSemester">+ Add Semester</button>
+                </div>
+
+                <button type="button" class="primary-button" id="calculateCgpa">Calculate CGPA</button>
+
+                <div class="error-message" id="cgpaError" role="alert"></div>
+                <div class="result" id="cgpaResult" aria-live="polite">
+                    <div class="result-label">Estimated CGPA</div>
+                    <div class="result-value" id="cgpaValue"></div>
+                    <div class="result-note" id="cgpaNote"></div>
+                </div>
+
+                <div class="note">
+                    Enter GPA and credits for each semester. This calculator uses
+                    a credit-weighted average; your university may use a different
+                    official CGPA formula.
+                </div>
+            </section>
+
+            <section class="calculator-card" id="target">
+                <div class="card-heading">
+                    <div class="card-icon">★</div>
+                    <div>
+                        <h3>Target Marks Calculator</h3>
+                        <p>Find the marks you need to achieve your target percentage.</p>
+                    </div>
+                </div>
+
+                <form id="targetForm" novalidate>
+                    <div class="field">
+                        <label for="targetTotal">Total Marks</label>
+                        <input type="number" id="targetTotal" min="0.01" step="any" placeholder="e.g. 100" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="currentMarks">Marks Already Obtained</label>
+                        <input type="number" id="currentMarks" min="0" step="any" placeholder="e.g. 35" required>
+                        <small>Marks already earned out of the total entered above.</small>
+                    </div>
+
+                    <div class="field">
+                        <label for="targetPercentage">Target Percentage (%)</label>
+                        <input type="number" id="targetPercentage" min="0" max="100" step="any" placeholder="e.g. 80" required>
+                    </div>
+
+                    <button class="primary-button" type="submit">Calculate Target Marks</button>
+                </form>
+
+                <div class="error-message" id="targetError" role="alert"></div>
+                <div class="result" id="targetResult" aria-live="polite">
+                    <div class="result-label">Marks Required</div>
+                    <div class="result-value" id="targetValue"></div>
+                    <div class="result-note" id="targetNote"></div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <section class="how-section" id="about">
+        <div class="how-container">
+            <div class="section-heading">
+                <p>HOW IT WORKS</p>
+                <h2>Simple. Fast. Student-friendly.</h2>
+                <p class="description">
+                    Use these tools to understand your academic progress and make informed plans.
+                </p>
+            </div>
+
+            <div class="how-grid">
+                <div class="how-card">
+                    <div class="how-number">01</div>
+                    <h3>Enter Your Details</h3>
+                    <p>Provide your marks, classes or semester GPA in the relevant calculator.</p>
+                </div>
+
+                <div class="how-card">
+                    <div class="how-number">02</div>
+                    <h3>Calculate Instantly</h3>
+                    <p>Get your result directly in your browser with no sign-up required.</p>
+                </div>
+
+                <div class="how-card">
+                    <div class="how-number">03</div>
+                    <h3>Plan Your Next Step</h3>
+                    <p>Use your results to plan your study goals and track academic progress.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <strong>StudentToolkit.</strong>
+        <p>Free academic calculators made for students.</p>
+        <p>© <span id="year"></span> Student Toolkit. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        function showError(id, message) {
+            const element = document.getElementById(id);
+            element.textContent = message;
+            element.classList.add("show");
+        }
+
+        function clearError(id) {
+            const element = document.getElementById(id);
+            element.textContent = "";
+            element.classList.remove("show");
+        }
+
+        function showResult(id) {
+            document.getElementById(id).classList.add("show");
+        }
+
+        function formatNumber(value, maximumDigits = 2) {
+            return Number(value.toFixed(maximumDigits)).toLocaleString("en-IN", {
+                maximumFractionDigits: maximumDigits
+            });
+        }
+
+        document.getElementById("percentageForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            clearError("percentageError");
+
+            const obtained = Number(document.getElementById("obtained").value);
+            const total = Number(document.getElementById("totalMarks").value);
+
+            if (
+                document.getElementById("obtained").value.trim() === "" ||
+                document.getElementById("totalMarks").value.trim() === "" ||
+                !Number.isFinite(obtained) ||
+                !Number.isFinite(total) ||
+                obtained < 0 ||
+                total <= 0 ||
+                obtained > total
+            ) {
+                showError("percentageError", "Enter valid marks. Obtained marks must be between zero and total marks.");
+                return;
+            }
+
+            const percentage = obtained / total * 100;
+
+            document.getElementById("percentageValue").textContent = formatNumber(percentage) + "%";
+            document.getElementById("percentageNote").textContent =
+                formatNumber(obtained) + " out of " + formatNumber(total) + " marks.";
+            showResult("percentageResult");
+        });
+
+        document.getElementById("attendanceForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            clearError("attendanceError");
+
+            const attendedInput = document.getElementById("classesAttended").value.trim();
+            const heldInput = document.getElementById("classesHeld").value.trim();
+            const targetInput = document.getElementById("attendanceTarget").value.trim();
+
+            const attended = Number(attendedInput);
+            const held = Number(heldInput);
+            const target = Number(targetInput);
+
+            if (
+                attendedInput === "" || heldInput === "" || targetInput === "" ||
+                !Number.isInteger(attended) ||
+                !Number.isInteger(held) ||
+                attended < 0 ||
+                held < 1 ||
+                attended > held ||
+                !Number.isFinite(target) ||
+                target <= 0 ||
+                target > 100
+            ) {
+                showError("attendanceError", "Enter valid class counts and a target attendance greater than 0% and up to 100%.");
+                return;
+            }
+
+            const percentage = attended / held * 100;
+            let note = "";
+
+            if (percentage >= target) {
+                if (target === 100 && percentage < 100) {
+                    note = "You currently meet the target only if your attendance is 100%.";
+                } else {
+                    note = "You currently meet your attendance target.";
+                }
+            } else if (target === 100) {
+                note = "You must attend every future class to reach 100% attendance.";
+            } else {
+                const required = Math.ceil((target * held - 100 * attended) / (100 - target));
+                note = "Attend the next " + required + " consecutive classes to reach at least " +
+                    formatNumber(target) + "%, assuming every class is counted equally.";
+            }
+
+            if (percentage < target && target === 100) {
+                note = "You need to attend every future class, but 100% cannot be reached after any absence has been recorded.";
+            }
+
+            document.getElementById("attendanceValue").textContent = formatNumber(percentage) + "%";
+            document.getElementById("attendanceNote").textContent =
+                attended + " of " + held + " classes attended. " + note;
+            showResult("attendanceResult");
+        });
+
+        const semesterList = document.getElementById("semesterList");
+        let semesterCount = 0;
+
+        function addSemester(gpa = "", credits = "1") {
+            if (semesterCount >= 12) {
+                showError("cgpaError", "You can add up to 12 semesters.");
+                return;
+            }
+
+            semesterCount++;
+
+            const row = document.createElement("div");
+            row.className = "semester-row";
+
+            const gpaField = document.createElement("div");
+            gpaField.className = "field";
+
+            const gpaLabel = document.createElement("label");
+            gpaLabel.textContent = "Semester " + semesterCount + " GPA";
+
+            const gpaInput = document.createElement("input");
+            gpaInput.type = "number";
+            gpaInput.className = "semester-gpa";
+            gpaInput.min = "0";
+            gpaInput.max = "10";
+            gpaInput.step = "any";
+            gpaInput.placeholder = "e.g. 8.5";
+            gpaInput.value = gpa;
+
+            gpaField.append(gpaLabel, gpaInput);
+
+            const creditField = document.createElement("div");
+            creditField.className = "field";
+
+            const creditLabel = document.createElement("label");
+            creditLabel.textContent = "Credits";
+
+            const creditInput = document.createElement("input");
+            creditInput.type = "number";
+            creditInput.className = "semester-credits";
+            creditInput.min = "0.01";
+            creditInput.step = "any";
+            creditInput.placeholder = "e.g. 20";
+            creditInput.value = credits;
+
+            creditField.append(creditLabel, creditInput);
+
+            const removeButton = document.createElement("button");
+            removeButton.type = "button";
+            removeButton.className = "remove-semester";
+            removeButton.textContent = "×";
+            removeButton.setAttribute("aria-label", "Remove semester");
+
+            removeButton.addEventListener("click", function() {
+                row.remove();
+                renumberSemesters();
+                clearError("cgpaError");
+            });
+
+            row.append(gpaField, creditField, removeButton);
+            semesterList.appendChild(row);
+        }
+
+        function renumberSemesters() {
+            semesterCount = 0;
+
+            semesterList.querySelectorAll(".semester-row").forEach(function(row) {
+                semesterCount++;
+                row.querySelector("label").textContent = "Semester " + semesterCount + " GPA";
+            });
+        }
+
+        document.getElementById("addSemester").addEventListener("click", function() {
+            clearError("cgpaError");
+            addSemester();
+        });
+
+        document.getElementById("calculateCgpa").addEventListener("click", function() {
+            clearError("cgpaError");
+
+            const rows = Array.from(semesterList.querySelectorAll(".semester-row"));
+
+            if (rows.length === 0) {
+                showError("cgpaError", "Add at least one semester.");
+                return;
+            }
+
+            let weightedTotal = 0;
+            let totalCredits = 0;
+
+            for (const row of rows) {
+                const gpaInput = row.querySelector(".semester-gpa");
+                const creditInput = row.querySelector(".semester-credits");
+
+                const gpaText = gpaInput.value.trim();
+                const creditText = creditInput.value.trim();
+                const gpa = Number(gpaText);
+                const credits = Number(creditText);
+
+                if (
+                    gpaText === "" ||
+                    creditText === "" ||
+                    !Number.isFinite(gpa) ||
+                    !Number.isFinite(credits) ||
+                    gpa < 0 ||
+                    gpa > 10 ||
+                    credits <= 0
+                ) {
+                    showError("cgpaError", "Enter a GPA between 0 and 10 and positive credits for every semester.");
+                    return;
+                }
+
+                weightedTotal += gpa * credits;
+                totalCredits += credits;
+            }
+
+            const cgpa = weightedTotal / totalCredits;
+
+            document.getElementById("cgpaValue").textContent = formatNumber(cgpa);
+            document.getElementById("cgpaNote").textContent =
+                "Weighted average of " + rows.length + " semester(s) and " +
+                formatNumber(totalCredits) + " total credits.";
+            showResult("cgpaResult");
+        });
+
+        addSemester();
+        addSemester();
+
+        document.getElementById("targetForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            clearError("targetError");
+
+            const totalInput = document.getElementById("targetTotal").value.trim();
+            const currentInput = document.getElementById("currentMarks").value.trim();
+            const targetInput = document.getElementById("targetPercentage").value.trim();
+
+            const total = Number(totalInput);
+            const current = Number(currentInput);
+            const target = Number(targetInput);
+
+            if (
+                totalInput === "" ||
+                currentInput === "" ||
+                targetInput === "" ||
+                !Number.isFinite(total) ||
+                !Number.isFinite(current) ||
+                !Number.isFinite(target) ||
+                total <= 0 ||
+                current < 0 ||
+                current > total ||
+                target < 0 ||
+                target > 100
+            ) {
+                showError("targetError", "Enter valid values. Current marks must be between zero and total marks, and the target must be 0–100%.");
+                return;
+            }
+
+            const requiredTotal = total * target / 100;
+            const additional = Math.max(0, requiredTotal - current);
+
+            document.getElementById("targetValue").textContent = formatNumber(additional) + " marks";
+            document.getElementById("targetNote").textContent =
+                "You need " + formatNumber(requiredTotal) + " marks in total for " +
+                formatNumber(target) + "%. " +
+                (additional === 0
+                    ? "You have already reached this target."
+                    : "You need " + formatNumber(additional) + " more marks.");
+            showResult("targetResult");
+        });
+    </script>
+
+</body>
+</html>
